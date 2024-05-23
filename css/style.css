@@ -1,543 +1,818 @@
-
-        /* Variables de color */
-        :root {
-            --color-principal: rgb(4, 13, 18);
-            --color-secundario: rgb(24, 61, 61);
-            --color-terciario: rgb(92, 131, 116);
-            --color-fondo: rgb(147, 177, 166);
-            --negro: white;
-        }
-
-        * {
-            font-family: "Ubuntu", sans-serif;
-            font-weight: 500;
-            font-style: normal;
-        }
-
-        /* Estilos generales */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--color-terciario);
-        }
-
-        .header {
-            background-color: var(--color-principal);
-            color: var(--color-terciario);
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            overflow: hidden;
-        }
-        .sticky-header{
-            position: sticky;
-            top: 10px;
-            opacity: 0.5;
-        }
-
-        .grid-container {
-            margin: 30px 100px;
-        }
-
-        /* Clear floats after the columns */
-        .grid-container:after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-
-        .book {
-            background-color: var(--color-fondo);
-            align-items: center;
-            border: 1px solid var(--color-principal);
-            float: left;
-            width: 25%;
-            padding: 10px 10px;
-            margin: 30px 30px 30px 30px;
-            flex: 1;
-            box-shadow: none !important;
-
-        }
-
-        .book:hover {
-            background-color: var(--color-principal);
-
-        }
-
-        .book img {
-            width: 300px;
-            height: 300px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .book button {
-            background-color: var(--color-principal) !important;
-            color: var(--color-fondo);
-            cursor: pointer;
-            margin-top: 10px;
-            font-size: 25px;
-            float: right;
-            padding: 10px 10px;
-        }
-
-        .book button:hover {
-            background-color: var(--color-fondo) !important;
-            color: var(--color-principal);
-            border: 1.4px solid var(--color-principal);
-        }
-
-        .book p {
-            color: var(--negro);
-        }
-
-        .libro {
-            padding: 10px 10px;
-            text-align: center;
-        }
-
-        @media screen and (max-width: 600px) {
-            .book {
-                width: 100%;
-                display: block;
-                margin-bottom: 20px;
-            }
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: var(--color-fondo);
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px var(--color-principal);
-            z-index: 1;
-            float: left;
-        }
-
-        .dropdown-content a {
-            float: none;
-            color: var(--color-principal);
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            text-align: left;
-        }
-
-        .dropdown-content a:hover {
-            background-color: var(--color-fondo);
-            color: var(--color-principal);
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .nav-derecho {
-            display: flex;
-            align-items: center;
-        }
-
-        .nav-derecho input[type="text"] {
-            padding: 8px;
-            border-radius: 5px;
-            border: none;
-            margin-right: 10px;
-        }
-
-        .search-container {
-            background: var(--color-terciario);
-            height: 30px;
-            border-radius: 30px;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: 0.8s;
-            box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, .3),
-                -4px -4px 6px 0 rgba(116, 125, 136, .2),
-                inset -4px -4px 6px 0 rgba(255, 255, 255, .2),
-                inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
-        }
-
-        .search-container:hover>.search-input {
-            width: 400px;
-        }
-
-        .search-container .search-input {
-            background: transparent;
-            border: none;
-            outline: none;
-            width: 0px;
-            font-weight: 500;
-            font-size: 16px;
-            transition: 0.8s;
-        }
-
-        .search-container .search-btn .fas {
-            color: var(--color-secundario);
-        }
-
-        @keyframes hoverShake {
-            0% {
-                transform: skew(0deg, 0deg);
-            }
-
-            25% {
-                transform: skew(5deg, 5deg);
-            }
-
-            75% {
-                transform: skew(-5deg, -5deg);
-            }
-
-            100% {
-                transform: skew(0deg, 0deg);
-            }
-        }
-
-        .search-container:hover {
-            animation: hoverShake 0.15s linear 3;
-        }
-
-        .titulo {
-            color: var(--color-fondo);
-            padding: 14px 0;
-            text-decoration: none;
-            font-size: 17px;
-            flex-grow: 1;
-            text-align: center;
-        }
-
-        .header a {
-            display: block;
-            color: var(--color-terciario);
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-            font-size: 17px;
-        }
-
-        .activo {
-            border: 2px solid var(--color-terciario);
-            color: var(--color-terciario);
-            margin-left: 3px;
-        }
-
-        header .icon {
-            display: none;
-        }
-
-        /*body items*/
-
-
-        /* Estilos para el Carrito de Compras */
-        .carrito-sidebar {
-            position: fixed;
-            top: 0;
-            right: -350px;
-            /* Inicialmente oculto */
-            height: 100vh;
-            width: 350px;
-            /* Cambia el ancho */
-            background-color: var(--color-fondo);
-            box-shadow: 0 0 15px var(--color-principal);
-            transition: right 0.3s ease;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .carrito-content {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .header-carrito {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px;
-            background-color: var(--color-principal);
-            color: var(--color-terciario);
-        }
-
-        .header-carrito .close {
-            font-size: 2em;
-            cursor: pointer;
-            color: var(--color-fondo);
-        }
-
-        .titulo-carrito {
-            margin: 0;
-            color: var(--color-terciario);
-            padding: 14px 0;
-            text-decoration: none;
-            font-size: 17px;
-            flex-grow: 1;
-            text-align: center;
-        }
-
-        .items-carrito {
-            flex: 1;
-            max-height: 70vh;
-            overflow-y: auto;
-            padding: 10px;
-        }
-
-        .bottom {
-            padding: 1rem 2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            background-color: var(--color-terciario);
-            box-shadow: 0 -5px 10px var(--color-principal);
-            margin-top: auto;
-            position: relative;
-        }
-
-        #subtotal-total {
-            font-weight: bold;
-            border-top: none;
-        }
-
-        .finalizar {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            z-index: 999;
-            background-color: var(--color-principal);
-            color: var(--color-terciario);
-            border: 1px solid var(--color-terciario);
-        }
-
-        .finalizar:hover {
-            color: var(--color-principal);
-            background-color: var(--color-fondo);
-        }
-
-        /* Otros estilos relacionados con el carrito de compras */
-
-        .texto-carrito {
-            color: var(--negro);
-            font-size: 14px;
-            margin: 0;
-        }
-
-        /* Estilos para los elementos del carrito */
-        .item-carrito {
-            display: flex;
-            margin-bottom: 10px;
-            border-bottom: 1px solid var(--color-principal);
-            padding-bottom: 10px;
-        }
-
-        .img-libro {
-            width: 7em;
-            height: 7em;
-            margin-right: 1em;
-        }
-
-        .img-libro[alt=""] {
-            content: "Imagen de libro";
-        }
-
-        .item-carrito-info {
-            flex: 2;
-            padding-top: 1rem;
-            padding-left: 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .item-carrito-controls {
-            display: flex;
-            align-items: center;
-        }
-
-        .item-carrito-controls .btn {
-            margin-right: 4px;
-        }
-
-        .titulo-libro {
-            flex: 2;
-            padding-top: 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            color: var(--negro);
-            margin: 10px 0;
-
-        }
-
-        .cantidad-libro {
-            min-width: 45px;
-            /* Ancho mínimo */
-            max-width: 45px;
-            /* Ancho máximo */
-            height: 10px;
-            text-align: center;
-            margin: 0 5px;
-            border-radius: 20%;
-            background-color: var(--color-terciario);
-            color: var(--negro);
-        }
-
-        .subtotal-libro {
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 14px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            color: var(--negro);
-        }
-
-        #carrito-sidebar.open {
-            right: 0;
-            /* Cambia el valor de right para mostrar el carrito */
-        }
-
-        .coloresi {
-            border: none;
-            background-color: var(--color-principal);
-            color: var(--color-terciario);
-            border-radius: 15px;
-            padding: 10px;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-        }
-
-        .eliminar {
-            font-size: 12px;
-            background-color: var(--color-principal);
-        }
-
-        #total-compra {
-            padding: 1rem 2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            box-shadow: 0 -5px 10px var(--color-principal);
-            margin-top: auto;
-            position: absolute;
-            /* Cambiado a absolute */
-            bottom: 0;
-            /* Alineado al fondo */
-            width: calc(100% - 4rem);
-            /* Ajustado el ancho */
-            color: var(--color-terciario);
-            height: 8rem;
-            background-color: var(--color-principal);
-        }
-
-        #subtotal-precio {
-            font-family: "Ubuntu", sans-serif;
-            font-weight: 300;
-            font-style: normal;
-        }
-
-        #subtotal-precio p {
-            margin: 0;
-        }
-
-        .carrito-detalle {
-            align-items: center;
-        }
-
-        @media only screen and (max-width: 768px) {
-
-            /* Estilos para pantallas de hasta 768px de ancho */
-            .carrito-sidebar {
-                width: 100%;
-                left: 0;
-                right: initial;
-                transition: left 0.3s ease;
-            }
-
-            .header-carrito .close {
-                font-size: 20px;
-                color: var(--negro);
-            }
-        }
-
-        /*RESPONSIVE HEADER*/
-
-        /* Estilos para pantallas pequeñas */
-        @media screen and (max-width: 600px) {
-            .header a:not(:first-child) {
-                display: none;
-            }
-
-            .header a.icon {
-                float: right;
-                display: block;
-            }
-
-            .menu-icono {
-                display: none;
-            }
-
-            .enlaces-menu a {
-                display: inline-block;
-                /* Cambia flex a inline-block */
-                margin-right: 20px;
-                /* Espacio entre los enlaces */
-            }
-
-            .header.responsive .enlaces-menu {
-                display: flex;
-                flex-direction: column;
-                background-color: var(--color-principal);
-                position: absolute;
-                width: 100%;
-                top: 60px;
-                left: 0;
-                right: 0;
-                z-index: 99;
-            }
-
-            .header.responsive .enlaces-menu a {
-                padding: 12px;
-                text-align: center;
-                text-decoration: none;
-                color: var(--color-terciario);
-            }
-        }
-
-        .enlaces-menu a {
-            display: inline-block;
-        }
-
-        .header.responsive .enlaces-menu {
-            display: flex;
-            flex-direction: column;
-            background-color: var(--color-principal);
-            position: absolute;
-            width: 100%;
-            top: 60px;
-            left: 0;
-            right: 0;
-            z-index: 99;
-        }
-
-        .header.responsive .enlaces-menu a {
-            padding: 12px;
-            text-align: center;
-            text-decoration: none;
-            color: var(--color-terciario);
-        }
+/* Variables de color */
+:root {
+    --color-principal: rgb(4, 13, 18);
+    --color-secundario: rgb(24, 61, 61);
+    --color-terciario: rgb(92, 131, 116);
+    --color-fondo: rgb(147, 177, 166);
+}
+
+* {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-fondo);
+}
+
+/*HEADER*/
+.header {
+    background-color: var(--color-principal);
+    color: var(--color-terciario);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    overflow: hidden;
+    padding: 000.5rem;
+}
+
+.sticky-header {
+    position: sticky;
+    top: 0.625rem; /* Equivalente a 10px */
+    opacity: 0.5;
+    z-index: 1001;
+    border-radius: 0.3125rem; /* Equivalente a 5px */
+}
+
+.titulo {
+    color: var(--color-terciario);
+    padding: 0.875rem 0; /* Equivalente a 14px arriba y abajo, 0 a los lados */
+    text-decoration: none;
+    font-size: 1.5rem;
+    flex-grow: 1;
+    text-align: center;
+    margin-left: 1.5625rem; /* Equivalente a 10rem */
+    margin-right: 1.5625rem; /* Equivalente a 10rem */
+}
+
+.titulo span {
+    color: var(--color-fondo);
+}
+
+.nav-list {
+    list-style-type: none;
+    display: flex;
+    gap: 0.625rem; /* Equivalente a 10px */
+    align-items: center;
+}
+
+/* Navigation links */
+.nav-list li a {
+    text-decoration: none;
+    color: var(--color-terciario) !important;
+    padding: 0.875rem 1rem; /* Equivalente a 14px arriba y abajo, 16px a los lados */
+    display: block;
+    text-align: center;
+    font-size: 1.0625rem; /* Equivalente a 17px */
+}
+
+.abrir-menu {
+    border: 0;
+    font-size: 1.5rem;
+    background-color: transparent;
+    cursor: pointer;
+    color: var(--color-terciario);
+    display: block;
+}
+
+.nav {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: var(--color-principal);
+    position: fixed;
+    /* Cambia de absolute a fixed */
+    top: 0;
+    /* Ajusta la posición según necesites */
+    left: 0;
+    width: 100%;
+    padding: 1rem;
+    z-index: 1000;
+}
+
+.nav.show {
+    display: flex;
+    top: 3.7rem;
+}
+
+.nav-list {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.nav-derecho {
+    display: flex;
+    align-items: center;
+    flex-grow: 1; 
+    justify-content: center; 
+    max-width: 50%; 
+    margin-left: 30%; 
+}
+.nav-derecho a{
+    padding: 1rem 1rem;
+    font-size: 1rem;
+    color: var(--color-terciario);
+
+    
+}
+.carrito-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-right: 2rem;
+}
+
+.carrito-link i {
+    font-size: 1.5rem; 
+}
+
+.carrito-link #cantidad-carrito {
+    position: absolute;
+    top: -0.3125rem; 
+    right: -0.625rem; 
+    background-color: var(--color-secundario); 
+    color: var(--color-fondo); 
+    border-radius: 50%;
+    padding: 0.3125rem 0.625rem; 
+    font-size: 0.75rem;
+}
+
+@media screen and (max-width: 490px) {
+    /* Menu button is visible by default on small screens */
+    .nav {
+        top: 5rem; /* Ajusta la posición del menú */
+    }
+}
+
+@media screen and (min-width: 491px) {
+    .abrir-menu {
+        display: none; /* Hide menu button on large screens */
+    }
+
+    .nav {
+        display: flex; /* Show navigation bar horizontally */
+        flex-direction: row;
+        align-items: center;
+        background-color: transparent;
+        position: static; /* Remove absolute positioning */
+        gap: 1rem;
+        padding: 0;
+    }
+
+    .nav-list {
+        flex-direction: row; /* Arrange navigation items horizontally */
+        align-items: center;
+    }
+
+    .nav-list li a {
+        color: var(--color-fondo); /* Set text color for navigation links */
+    }
+}
+
+/*--------------------------------------------------------------------*/
+.grid-container {
+    margin: 1.875rem 6.25rem; /* Equivalente a 30px 100px */
+}
+
+.grid-container:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.book {
+    position: relative;
+    background-color: var(--color-terciario);
+    align-items: center;
+    border: 1px solid var(--color-principal);
+    float: left;
+    width: 25%;
+    padding: 0.625rem; /* Equivalente a 10px */
+    margin: 1.875rem; /* Equivalente a 30px */
+    flex: 1;
+    box-shadow: 0.625rem 1.25rem 1.875rem var(--color-secundario); /* Equivalente a 10px 20px 30px */
+    height: 37.5rem; /* Equivalente a 600px */
+    overflow: hidden;
+}
+
+.book .libro {
+    position: relative;
+    /* Agrega posicionamiento relativo para los elementos internos */
+    height: 100%;
+    /* Asegura que el contenedor de libro ocupe toda la altura */
+}
+
+.book:hover {
+    background-color: var(--color-principal);
+    transform: scale(1.07);
+    transition: 0.8s ease;
+}
+
+.book img {
+    max-width: 100%;
+    height: 18.75rem; /* Equivalente a 300px */
+    cursor: pointer;
+    margin-top: 0.625rem; /* Equivalente a 10px */
+}
+
+@media screen and (max-width: 768px) {
+    .book {
+        width: 48%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .book {
+        width: 100%;
+        margin: 0.625rem 0; /* Equivalente a 10px 0 */
+    }
+}
+
+.button {
+    background-color: var(--color-secundario) !important;
+    color: var(--color-fondo);
+}
+
+.button:hover {
+    background-color: var(--color-fondo) !important;
+    color: var(--color-principal);
+    border: 0.0875rem solid var(--color-principal); /* Equivalente a 1.4px */
+}
+
+.book button {
+    position: absolute;
+    bottom: 0.625rem; /* Equivalente a 10px */
+    right: 0.625rem; /* Equivalente a 10px */
+    background-color: var(--color-secundario);
+    color: var(--color-fondo);
+    padding: 0.625rem; /* Equivalente a 10px */
+    border: none;
+    cursor: pointer;
+    z-index: 1;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.book:hover .titulo-libro,
+.book:hover .precio {
+    color: var(--color-fondo);
+}
+
+.book:hover img {
+    border: 1px solid var(--color-fondo);
+}
+
+.book p {
+    color: var(--color-principal);
+}
+
+.libro {
+    padding: 0.625rem; /* Equivalente a 10px */
+    text-align: center;
+    position: relative;
+}
+
+.img-libro {
+    width: 7em;
+    height: 7em;
+    margin-right: 1em;
+}
+
+@media screen and (max-width: 600px) {
+    .book {
+        width: 100%;
+        display: block;
+        margin-bottom: 1.25rem; /* Equivalente a 20px */
+    }
+}
+
+.activo {
+    border: 0.125rem solid var(--color-terciario); /* Equivalente a 2px */
+    color: var(--color-terciario);
+    margin-left: 0.1875rem; /* Equivalente a 3px */
+}
+
+header .icon {
+    display: none;
+}
+
+/*body items*/
+
+#subtotal-total {
+    font-weight: bold;
+    border-top: none;
+}
+
+.texto-carrito {
+    color: var(--color-principal);
+    font-size: 2em;
+    margin: 1.25rem; /* Equivalente a 20px */
+}
+
+/* Estilos para los elementos del carrito */
+.item-carrito {
+    display: flex;
+    margin-bottom: 0.625rem; /* Equivalente a 10px */
+    border-bottom: 1px solid var(--color-principal);
+    padding-bottom: 0.625rem; /* Equivalente a 10px */
+}
+
+.img-libro[alt=""] {
+    content: "Imagen de libro";
+}
+
+.item-carrito-info {
+    flex: 2;
+    padding-top: 1rem;
+    padding-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
+.item-carrito-controls {
+    display: flex;
+    align-items: center;
+}
+
+.item-carrito-controls .btn {
+    margin-right: 0.25rem; /* Equivalente a 4px */
+}
+
+.titulo-libro {
+    flex: 2;
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    color: var(--color-principal);
+    margin: 0.625rem; /* Equivalente a 10px */
+    font-size: 1.75rem; /* Equivalente a 28px */
+}
+
+.cantidad-libro {
+    min-width: 2.8125rem; /* Equivalente a 45px */
+    max-width: 3.125rem; /* Equivalente a 50px */
+    height: 1.875rem; /* Equivalente a 30px */
+    text-align: center;
+    margin: 0 0.3125rem; /* Equivalente a 5px */
+    border-radius: 20%;
+    background-color: var(--color-terciario);
+    color: var(--negro);
+}
+
+.subtotal-libro {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.875rem; /* Equivalente a 14px */
+    font-weight: bold;
+    letter-spacing: 0.125rem; /* Equivalente a 2px */
+    color: var(--color-principal);
+}
+
+#carrito-sidebar.open {
+    right: 0;
+    /* Cambia el valor de right para mostrar el carrito */
+}
+
+.coloresi {
+    border: none;
+    background-color: var(--color-principal);
+    color: var(--color-terciario);
+    border-radius: 0.9375rem; /* Equivalente a 15px */
+    padding: 0.625rem; /* Equivalente a 10px */
+    font-size: 0.625rem; /* Equivalente a 10px */
+    text-transform: uppercase;
+    letter-spacing: 0.125rem; /* Equivalente a 2px */
+    cursor: pointer;
+}
+
+.eliminar {
+    font-size: 1.0625rem; /* Equivalente a 17px */
+    background-color: var(--color-principal) !important;
+    color: var(--color-terciario) !important;
+    border: none !important;
+}
+
+#total-compra {
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: 0 -0.3125rem 0.625rem var(--color-principal); /* Equivalente a 0 -5px 10px */
+    margin-top: auto;
+    position: absolute;
+    bottom: 0;
+    width: calc(100% - 4rem);
+    color: var(--color-terciario);
+    height: 8rem;
+    background-color: var(--color-principal);
+}
+
+#subtotal-precio {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    align-self: flex-start;
+}
+
+#subtotal-precio p {
+    margin: 0;
+}
+
+.carrito-detalle {
+    align-items: center;
+}
+
+@media only screen and (max-width: 768px) {
+    /* Estilos para pantallas de hasta 768px de ancho */
+    .carrito-sidebar {
+        width: 100%;
+        left: 0;
+        right: initial;
+        transition: left 0.3s ease;
+    }
+
+    .header-carrito .close {
+        font-size: 1.5rem;
+    }
+
+    .items-carrito {
+        display: block;
+    }
+
+    .item-carrito-info {
+        margin-bottom: 0.625rem; /* Equivalente a 10px */
+    }
+
+    .carrito-detalle {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+/* Estilos para la ventana modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    backdrop-filter: blur(10px);
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-fondo);
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid var(--color-principal);
+    width: 35%;
+    max-width: 600px;
+    max-height: 70vh; 
+    overflow-y: auto; 
+    border-radius: 10px;
+}
+
+
+.modal-content h2 {
+    position: relative;
+    z-index: 9999; /* Ajustar según sea necesario */
+    display: block;
+    font-size: 1rem;
+}
+.modal-content button.finalizar{
+    position: relative;
+    z-index: 9999; /* Ajustar según sea necesario */
+    display: block;
+    font-size: 1em;
+    display: block; /* Asegurar que el botón sea visible */
+
+}
+
+.close {
+    color: var(--color-principal);
+    font-size: 28px;
+    font-weight: bold;
+    align-self: flex-start; 
+    margin-top: 10px; 
+    margin-right: 10px; 
+    cursor: pointer;
+    z-index: 1001; 
+}
+
+
+
+
+.close:hover,
+.close:focus {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.finalizar {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: var(--color-secundario);
+    color: var(--color-terciario);
+    border: 1px solid var(--color-terciario);
+    z-index: 999;
+    margin-left: 330px;
+}
+
+.finalizar:hover {
+    color: var(--color-principal);
+    background-color: var(--color-fondo);
+}
+
+.fin-modal{
+    margin-top: 20px;
+}
+
+
+
+@keyframes slideOut {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+}
+
+.slide-out {
+    animation: slideOut 1.5s forwards;
+}
+
+
+
+/*HEADER*/
+
+
+
+/* Ajustes específicos para pantallas de 480px */
+@media screen and (max-width: 480px) {
+    
+
+    .titulo {
+        font-size: 1.25rem; /* Equivalente a 20px */
+    }
+
+    .nav {
+        width: 100%;
+        position: fixed;
+        top: 3.5rem; /* Ajusta la posición según necesites */
+        left: 0;
+    }
+
+    .nav-derecho {
+        max-width: 100%;
+        margin-left: 0;
+        flex-direction: column;
+    }
+
+    .carrito-link {
+        margin-right: 1rem;
+        
+    }
+
+    .grid-container {
+        margin: 1rem 2%;
+    }
+
+    .book {
+        width: 100%;
+        margin: 0.625rem 0; /* Equivalente a 10px 0 */
+    }
+
+    .modal-content {
+        width: 90%;
+    }
+
+    .finalizar {
+        margin-left: 0;
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Ajustes específicos para pantallas de 320px */
+@media screen and (max-width: 320px) {
+    .titulo {
+        font-size: 1rem; /* Equivalente a 16px */
+    }
+
+    .header {
+        justify-content: space-between;
+    }
+
+  
+
+    .nav-list li a {
+        font-size: 0.875rem; /* Ajustado para pantallas más pequeñas */
+        
+    }
+
+    .nav-derecho {
+        margin-left: 0;
+    }
+
+    .grid-container {
+        margin: 0.5rem 1%;
+    }
+
+    .book {
+        width: 100%;
+        margin: 0.625rem 0; /* Equivalente a 10px 0 */
+    }
+
+    .modal-content {
+        width: 90%;
+    }
+
+    .finalizar {
+        margin-left: 0;
+        width: 100%;
+        text-align: center;
+    }
+}
+
+
+
+/* Modal Login Form */
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid var(--color-principal);
+    box-sizing: border-box;
+}
+
+.button-login {
+    background-color: var(--color-secundario);
+    color: var(--color-terciario);
+    padding: 14px 20px;
+    font-size: 1.3rem;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+
+}
+
+.button-login:hover {
+    color: var(--color-principal);
+    background-color: var(--color-fondo);
+    border: 1px solid var(--color-secundario);
+
+}
+
+.button-login-r {
+    background-color: var(--color-principal);
+    color: var(--color-fondo);
+    padding: 14px 20px;
+    font-size: 1.3rem;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.button-login-r:hover {
+    color: var(--color-principal);
+    background-color: var(--color-fondo);
+    border: 1px solid var(--color-secundario);
+}
+
+.close-login {
+    position: absolute;
+    right: 25px;
+    top: 0;
+    color: var(--color-principal);
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+    
+}
+
+.close-login:hover {
+    color: var(--color-terciario);
+}
+
+.cancelbtn {
+    width: auto;
+    padding: 10px 18px;
+    background-color: var(--color-secundario);
+    color: var(--color-terciario);
+    border: none;
+    border: 1px solid var(--color-secundario);
+
+
+}
+
+.cancelbtn:hover {
+    color: var(--color-principal);
+    background-color: var(--color-fondo);
+}
+
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+    position: relative;
+}
+
+.imgcontainer svg {
+    width: 10rem;
+    height: 10rem;
+}
+
+.container {
+    padding: 16px;
+}
+
+span.psw {
+    float: right;
+    padding-top: 16px;
+}
+
+.modal-login {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    padding-top: 60px;
+    backdrop-filter: blur(10px);
+
+}
+
+.modal-content-login {
+    background-color: var(--color-fondo);
+    margin: 5% auto 15% auto;
+    border: 1px solid var(--color-principal);
+    width: 30%;
+}
+
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s;
+}
+
+@-webkit-keyframes animatezoom {
+    from {-webkit-transform: scale(0)} 
+    to {-webkit-transform: scale(1)}
+}
+
+@keyframes animatezoom {
+    from {transform: scale(0)} 
+    to {transform: scale(1)}
+}
+
+@media screen and (max-width: 300px) {
+    span.psw {
+        display: block;
+        float: none;
+    }
+
+    .cancelbtn {
+        width: 100%;
+    }
+}
+/*LOGIN CLAVE*/
+/* Estilo para el mensaje emergente */
+.password-note {
+    display: none;
+    color: red;
+    font-size: 14px;
+}
+
+/* Estilo para mostrar el mensaje emergente */
+.password-note.show {
+    display: block;
+}
