@@ -346,132 +346,94 @@ window.onclick = function(event) {
 }
 /*CLAVE*/
 document.addEventListener('DOMContentLoaded', function() {
-    const registerForm = document.querySelector('#register-form');
-    const loginForm = document.querySelector('#login-form');
+    const loginForm = document.querySelector('#loginForm');
+    const loginButton = document.querySelector('#loginButton');
+    const usernameInput = document.querySelector('#usua');
+    const passwordInput = document.querySelector('#psw');
+    const lowercaseRegex = /[a-z]/;
+    const uppercaseRegex = /[A-Z]/;
+    const numberRegex = /[0-9]/;
+    const noSpecialCharRegex = /^[a-zA-Z0-9]*$/;
 
-    // Manejar el registro de usuarios
-    registerForm.addEventListener('submit', function(event) {
-        event.preventDefault();
+    const passwordNote = document.querySelector('#passwordNote');
+    const passwordNotee = document.querySelector('#passwordNotee');
+    const usuarioNote = document.querySelector('#usuarioNote');
+    const usuarioNotee = document.querySelector('#usuarioNotee');
 
-        const nombre = document.querySelector('#nombre').value;
-        const apellido = document.querySelector('#apellido').value;
-        const nacimiento = document.querySelector('#nacimiento').value;
-        const username = document.querySelector('#new-user').value;
-        const email = document.querySelector('#new-email').value;
-        const password = document.querySelector('#psw').value;
+    function validateInput() {
+        const username = usernameInput.value;
+        const password = passwordInput.value;
+        let valid = true;
 
-        // Crear objeto de usuario
-        const newUser = {
-            nombre,
-            apellido,
-            nacimiento,
-            username,
-            email,
-            password
-        };
-
-        // Obtener usuarios existentes o inicializar un array vacío
-        const users = JSON.parse(localStorage.getItem('users')) || [];
-
-        // Verificar si el usuario ya existe
-        const existingUser = users.find(user => user.username === username);
-        if (existingUser) {
-            alert('El usuario ya existe');
-            return;
-        }
-
-        // Agregar el nuevo usuario al array
-        users.push(newUser);
-
-        // Guardar el array actualizado en localStorage
-        localStorage.setItem('users', JSON.stringify(users));
-
-        // Mostrar mensaje de éxito
-        alert('Usuario registrado con éxito');
-
-        // Limpiar el formulario
-        registerForm.reset();
-        document.getElementById('register-modal').style.display = 'none';
-    });
-
-    // Manejar el login de usuarios
-    loginForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        const username = document.querySelector('#usua').value;
-        const password = document.querySelector('#psw').value;
-
-        const users = JSON.parse(localStorage.getItem('users')) || [];
-
-        // Buscar el usuario por nombre de usuario y contraseña
-        const user = users.find(user => user.username === username && user.password === password);
-
-        if (user) {
-            alert('Login exitoso');
-            document.getElementById('login-modal').style.display = 'none';
-            loginForm.reset();
+        // Validación de usuario
+        if (!lowercaseRegex.test(username) || 
+            !uppercaseRegex.test(username) || 
+            !numberRegex.test(username) ||
+            username.length < 8 || username.length > 16) {
+            usuarioNote.classList.add('show');
+            valid = false;
         } else {
-            // Si el usuario no es encontrado, mostrar mensaje de error
-            alert('Usuario o contraseña incorrectos');
+            usuarioNote.classList.remove('show');
+        }
+
+        if (!noSpecialCharRegex.test(username)) {
+            usuarioNotee.classList.add('show');
+            valid = false;
+        } else {
+            usuarioNotee.classList.remove('show');
+        }
+
+        // Validación de contraseña
+        if (!lowercaseRegex.test(password) || 
+            !uppercaseRegex.test(password) || 
+            !numberRegex.test(password) ||
+            password.length < 8 || password.length > 16) {
+            passwordNote.classList.add('show');
+            valid = false;
+        } else {
+            passwordNote.classList.remove('show');
+        }
+
+        if (!noSpecialCharRegex.test(password)) {
+            passwordNotee.classList.add('show');
+            valid = false;
+        } else {
+            passwordNotee.classList.remove('show');
+        }
+
+        // Activar/Desactivar botón de ingresar
+        if (valid) {
+            loginButton.classList.remove('disabled');
+            loginButton.disabled = false;
+        } else {
+            loginButton.classList.add('disabled');
+            loginButton.disabled = true;
+        }
+    }
+
+    usernameInput.addEventListener('input', validateInput);
+    passwordInput.addEventListener('input', validateInput);
+
+    loginButton.addEventListener('click', function() {
+        const username = usernameInput.value;
+        const password = passwordInput.value;
+        if (loginButton.disabled === false) {
+            localStorage.setItem('username', username);
+            localStorage.setItem('loggedIn', true);
+            alert('Sesión iniciada');
         }
     });
 
-    // Código para abrir y cerrar el modal de login
-    const loginModal = document.getElementById('login-modal');
-    const userButton = document.querySelector('.nav-derecho a[href="#"]');
-    
-    if (userButton) {
-        userButton.onclick = function() {
-            loginModal.style.display = "block";
-        }
-    }
-
-    window.onclick = function(event) {
-        if (event.target == loginModal) {
-            loginModal.style.display = "none";
-        }
-    }
-
-    // Código para abrir el modal de registro
-    const registerButton = document.getElementById('registerButton');
-    
-    if (registerButton) {
-        registerButton.onclick = function() {
-            document.getElementById('register-modal').style.display = 'block';
-        }
-    }
-
-    // Manejar el cierre del modal al hacer clic en el botón de cierre
-    document.querySelectorAll('.close-login').forEach(closeButton => {
-        closeButton.onclick = function() {
-            closeButton.parentElement.parentElement.style.display = 'none';
-        }
-    });
-
-    // Inicializar usuario predeterminado si no existe
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    if (users.length === 0) {
-        const defaultUser = {
-            nombre: "Proyecto",
-            apellido: "Cac",
-            nacimiento: "2024-01-01",
-            username: "ProyectoG15",
-            email: "grupo15@example.com",
-            password: "ProyectoG15"
-        };
-        users.push(defaultUser);
-        localStorage.setItem('users', JSON.stringify(users));
+    // Verificar estado de la sesión al cargar la página
+    if (localStorage.getItem('loggedIn') === 'true') {
+        alert('Ya has iniciado sesión como ' + localStorage.getItem('username'));
     }
 });
-
-
-
-
+/*REGISTRARSE* */
 
 document.getElementById('registerButton').onclick = function() {
     document.getElementById('register-modal').style.display = 'block';
 }
-
 
 
 
