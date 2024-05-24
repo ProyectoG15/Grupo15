@@ -209,67 +209,123 @@ function actualizarCantidadCarrito() {
     document.getElementById("cantidad-carrito").textContent = cantidadCarrito;
 }
 
+
+
+
 async function fetchBooks() {
     const queries = [
-        'python', 'programming', 'data science', 'web development',
-        'machine learning', 'fiction', 'non-fiction',
+        'python', 'programming',  
+         'non-fiction',
         'fantasy', 'history', 'biography', 'mystery', 'romance', 'thriller'
     ];
 
-    // Seleccionar aleatoriamente una consulta del array queries
-    const randomIndex = Math.floor(Math.random() * queries.length);
-    const query = queries[randomIndex];
-    
-    const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=${query}`;
+    let allBooks = [];
 
-    try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        displayBooks(data.items);
-    } catch (error) {
-        console.error('Error al obtener los libros:', error);
+    for (const query of queries) {
+        const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=${query}`;
+        try {
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+            allBooks = [...allBooks, ...data.items];
+        } catch (error) {
+            console.error('Error al obtener los libros:', error);
+        }
     }
+
+    displayBooks(allBooks);
 }
 
 
+
 function displayBooks(books) {
-const booksContainer = document.getElementById('books-container');
-booksContainer.innerHTML = '';
+    const booksContainer = document.getElementById('books-container');
+    booksContainer.innerHTML = '';
 
-// Limitar el número de libros a mostrar a 12
-const maxBooksToShow = 12;
-const booksToShow = books.filter(book => {
-// Verifica si el precio está definido y es mayor que cero
-return book.saleInfo && book.saleInfo.listPrice && book.saleInfo.listPrice.amount > 0;
-}).slice(0, maxBooksToShow);
+    const maxBooksToShow = 35;
+    const booksToShow = books.filter(book => {
+        return book.saleInfo && book.saleInfo.listPrice && book.saleInfo.listPrice.amount > 0;
+    }).slice(0, maxBooksToShow);
 
-booksToShow.forEach(book => {
-const bookInfo = book.volumeInfo;
-const bookElement = document.createElement('div');
-bookElement.classList.add('book');
+    booksToShow.forEach(book => {
+        const bookInfo = book.volumeInfo;
+        const bookElement = document.createElement('div');
+        bookElement.classList.add('book');
 
-const bookImage = bookInfo.imageLinks ? bookInfo.imageLinks.thumbnail : './Imagenes/default-book.png';
-const bookTitle = bookInfo.title;
-const bookAuthor = bookInfo.authors ? bookInfo.authors.join(', ') : 'Autor desconocido';
-const bookPrice = book.saleInfo.listPrice ? `$${book.saleInfo.listPrice.amount}` : 'Precio no disponible';
+        const bookImage = bookInfo.imageLinks ? bookInfo.imageLinks.thumbnail : './Imagenes/default-book.png';
+        const bookTitle = bookInfo.title;
+        const bookAuthor = bookInfo.authors ? bookInfo.authors.join(', ') : 'Autor desconocido';
+        const bookPrice = book.saleInfo.listPrice ? `$${book.saleInfo.listPrice.amount}` : 'Precio no disponible';
 
-bookElement.innerHTML = `
-    <div class="libro">
-        <img src="${bookImage}" alt="Portada del libro">
-        <h3 class="titulo-libro">${bookTitle}</h3>
-        <p>${bookAuthor}</p>
-        <p class="precio">${bookPrice}</p>
-        <button class="button" onclick="agregarAlCarrito(this)"><i class="fas fa-shopping-cart"></i></button>
-    </div>
-`;
+        bookElement.innerHTML = `
+            <div class="libro">
+                <img src="${bookImage}" alt="Portada del libro">
+                <h3 class="titulo-libro">${bookTitle}</h3>
+                <p>${bookAuthor}</p>
+                <p class="precio">${bookPrice}</p>
+                <button class="button ver-mas" data-book-id="${book.id}" style="margin: auto;">Ver más</button>
+                <button class="button" onclick="agregarAlCarrito(this)"><i class="fas fa-shopping-cart"></i></button>
+            </div>
+        `;
 
-booksContainer.appendChild(bookElement);
-});
+        booksContainer.appendChild(bookElement);
+    });
+
+    // Agregar evento de clic a los botones "Ver más"
+    const verMasButtons = document.querySelectorAll('.ver-mas');
+    verMasButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const bookId = button.getAttribute('data-book-id');
+            verDetalle(bookId);
+        });
+    });
+}
+
+
+
+function verDetalle(bookId) {
+    // Obtener detalles del libro usando el ID
+    const apiUrl = `https://www.googleapis.com/books/v1/volumes/${bookId}`;
+    
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            // Mostrar los detalles del libro en el contenedor
+            const libro = data.volumeInfo;
+
+            document.getElementById('titulo-libro').textContent = libro.title;
+            document.getElementById('autor-libro').textContent = `Autor: ${libro.authors ? libro.authors.join(', ') : 'Desconocido'}`;
+            
+            // Eliminar las etiquetas <p> del texto de la descripción
+            const descripcion = libro.description ? libro.description.replace(/<\/?p>/g, '') : 'Descripción no disponible';
+            document.getElementById('descripcion-libro').textContent = `Descripción: ${descripcion}`;
+            
+            document.getElementById('precio-libro').textContent = `Precio: ${data.saleInfo && data.saleInfo.listPrice && data.saleInfo.listPrice.amount ? '$' + data.saleInfo.listPrice.amount : 'Precio no disponible'}`;
+            
+            // Mostrar la imagen del libro
+            const imagen = libro.imageLinks ? libro.imageLinks.thumbnail : './Imagenes/default-book.png';
+            document.getElementById('imagen-libro').src = imagen;
+            
+            // Mostrar el contenedor de detalles del libro
+            document.getElementById('detalle-libro').style.display = 'block';
+        })
+        .catch(error => console.error('Error al obtener detalles del libro:', error));
+        window.location.href = `detalle.html?bookId=${bookId}`;
+
+
+}
+
+// Redirección después de mostrar los detalles del libro
+function redirigirADetalle() {
+    const bookId = obtenerIdDelLibro(); // Función para obtener el ID del libro
+    window.location.href = `detalle.html?bookId=${bookId}`;
 }
 
 fetchBooks();
 
-
+setTimeout(function() {
+    document.getElementById("loader-container").style.display = "none";
+    document.getElementById("books-container").style.display = "block";
+}, 4200); // 5000 milisegundos = 5 segundos
 
 // Get the modal
 var loginModal = document.getElementById('login-modal');
@@ -289,18 +345,133 @@ window.onclick = function(event) {
   }
 }
 /*CLAVE*/
-// Validar la contraseña y mostrar el mensaje emergente
-document.querySelector('#psw').addEventListener('input', function() {
-    var passwordInput = this.value;
-    var lowercaseRegex = /[a-z]/;
-    var uppercaseRegex = /[A-Z]/;
-    var numberRegex = /[0-9]/;
+document.addEventListener('DOMContentLoaded', function() {
+    const registerForm = document.querySelector('#register-form');
+    const loginForm = document.querySelector('#login-form');
 
-    var passwordNote = document.querySelector('#passwordNote');
+    // Manejar el registro de usuarios
+    registerForm.addEventListener('submit', function(event) {
+        event.preventDefault();
 
-    if (!lowercaseRegex.test(passwordInput) || !uppercaseRegex.test(passwordInput) || !numberRegex.test(passwordInput) || passwordInput.length < 8) {
-        passwordNote.classList.add('show');
-    } else {
-        passwordNote.classList.remove('show');
+        const nombre = document.querySelector('#nombre').value;
+        const apellido = document.querySelector('#apellido').value;
+        const nacimiento = document.querySelector('#nacimiento').value;
+        const username = document.querySelector('#new-user').value;
+        const email = document.querySelector('#new-email').value;
+        const password = document.querySelector('#psw').value;
+
+        // Crear objeto de usuario
+        const newUser = {
+            nombre,
+            apellido,
+            nacimiento,
+            username,
+            email,
+            password
+        };
+
+        // Obtener usuarios existentes o inicializar un array vacío
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+
+        // Verificar si el usuario ya existe
+        const existingUser = users.find(user => user.username === username);
+        if (existingUser) {
+            alert('El usuario ya existe');
+            return;
+        }
+
+        // Agregar el nuevo usuario al array
+        users.push(newUser);
+
+        // Guardar el array actualizado en localStorage
+        localStorage.setItem('users', JSON.stringify(users));
+
+        // Mostrar mensaje de éxito
+        alert('Usuario registrado con éxito');
+
+        // Limpiar el formulario
+        registerForm.reset();
+        document.getElementById('register-modal').style.display = 'none';
+    });
+
+    // Manejar el login de usuarios
+    loginForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const username = document.querySelector('#usua').value;
+        const password = document.querySelector('#psw').value;
+
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+
+        // Buscar el usuario por nombre de usuario y contraseña
+        const user = users.find(user => user.username === username && user.password === password);
+
+        if (user) {
+            alert('Login exitoso');
+            document.getElementById('login-modal').style.display = 'none';
+            loginForm.reset();
+        } else {
+            // Si el usuario no es encontrado, mostrar mensaje de error
+            alert('Usuario o contraseña incorrectos');
+        }
+    });
+
+    // Código para abrir y cerrar el modal de login
+    const loginModal = document.getElementById('login-modal');
+    const userButton = document.querySelector('.nav-derecho a[href="#"]');
+    
+    if (userButton) {
+        userButton.onclick = function() {
+            loginModal.style.display = "block";
+        }
+    }
+
+    window.onclick = function(event) {
+        if (event.target == loginModal) {
+            loginModal.style.display = "none";
+        }
+    }
+
+    // Código para abrir el modal de registro
+    const registerButton = document.getElementById('registerButton');
+    
+    if (registerButton) {
+        registerButton.onclick = function() {
+            document.getElementById('register-modal').style.display = 'block';
+        }
+    }
+
+    // Manejar el cierre del modal al hacer clic en el botón de cierre
+    document.querySelectorAll('.close-login').forEach(closeButton => {
+        closeButton.onclick = function() {
+            closeButton.parentElement.parentElement.style.display = 'none';
+        }
+    });
+
+    // Inicializar usuario predeterminado si no existe
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    if (users.length === 0) {
+        const defaultUser = {
+            nombre: "Proyecto",
+            apellido: "Cac",
+            nacimiento: "2024-01-01",
+            username: "ProyectoG15",
+            email: "grupo15@example.com",
+            password: "ProyectoG15"
+        };
+        users.push(defaultUser);
+        localStorage.setItem('users', JSON.stringify(users));
     }
 });
+
+
+
+
+
+document.getElementById('registerButton').onclick = function() {
+    document.getElementById('register-modal').style.display = 'block';
+}
+
+
+
+

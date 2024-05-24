@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Libro</title>
+    <link rel="stylesheet" href="./css/style.css"> <!-- Agrega el enlace a tu archivo CSS -->
+</head>
+<body>
+    <div id="detalle-libro" class="grid-container"> <!-- Agrega la clase grid-container para alinear los elementos -->
+        <h2 id="titulo-libro" class="titulo-libro"></h2> <br>
+        <p id="autor-libro" class="descripcion-libro"></p><br>
+        <p id="descripcion-libro" class="descripcion-libro"></p><br>
+        <p id="precio-libro" class="descripcion-libro"></p><br>
+        <img id="imagen-libro" class="img-libro" src="" alt="Portada del libro">
+        <!-- Otros detalles del libro que desees mostrar -->
+    </div>
+
+    <script>
+        // Obtener el ID del libro de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const bookId = urlParams.get('bookId');
+
+        // Obtener los detalles del libro utilizando el ID
+        const apiUrl = `https://www.googleapis.com/books/v1/volumes/${bookId}`;
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                // Mostrar los detalles del libro en la página
+                const libro = data.volumeInfo;
+                document.getElementById('titulo-libro').textContent = libro.title;
+                document.getElementById('autor-libro').textContent = `Autor: ${libro.authors ? libro.authors.join(', ') : 'Desconocido'}`;
+                document.getElementById('descripcion-libro').textContent = `Descripción: ${libro.description ? libro.description : 'No disponible'}`;
+                document.getElementById('precio-libro').textContent = `Precio: ${data.saleInfo && data.saleInfo.listPrice && data.saleInfo.listPrice.amount ? '$' + data.saleInfo.listPrice.amount : 'Precio no disponible'}`;
+                
+                // Mostrar la imagen del libro
+                const imagen = libro.imageLinks ? libro.imageLinks.thumbnail : './Imagenes/default-book.png';
+                document.getElementById('imagen-libro').src = imagen;
+            })
+            .catch(error => console.error('Error al obtener detalles del libro:', error));
+    </script>
+</body>
+</html>
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 15% 35% 35% 15%; /* Define cuatro columnas */
+    gap: 20px; /* Espacio entre las columnas */
+    padding: 20px;
+}
+
+.img-libro {
+    width: 300px; /* La imagen ocupa el 100% del ancho del contenedor */
+    height: auto; /* Altura automática para mantener la proporción */
+    grid-row: 2 / span 2; /* Ocupa desde la segunda columna hasta la siguiente */
+    
+}
+
+.titulo-libro {
+    grid-column: 2 / span 2; /* Ocupa desde la segunda columna hasta la siguiente */
+    margin-top: 0; /* Elimina el margen superior del título */
+}
+
+.descripcion-libro {
+    grid-column: 3 / span 1; /* Ocupa solo la tercera columna */
+}
+
+/* Estilos adicionales para los párrafos */
+.descripcion-libro p {
+    margin: 5px 0;
+}
+</style>
+
