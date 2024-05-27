@@ -7,9 +7,10 @@
 }
 
 * {
-    font-family: "Ubuntu", sans-serif;
-    font-weight: 500;
-    font-style: normal;
+    font-family: "Oswald", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal
 }
 
 /* Estilos generales */
@@ -43,7 +44,7 @@ body {
     color: var(--color-terciario);
     padding: 0.875rem 0; /* Equivalente a 14px arriba y abajo, 0 a los lados */
     text-decoration: none;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     flex-grow: 1;
     text-align: center;
     margin-left: 1.5625rem; /* Equivalente a 10rem */
@@ -68,7 +69,7 @@ body {
     padding: 0.875rem 1rem; /* Equivalente a 14px arriba y abajo, 16px a los lados */
     display: block;
     text-align: center;
-    font-size: 1.0625rem; /* Equivalente a 17px */
+    font-size: 1.1rem; /* Equivalente a 17px */
 }
 
 .abrir-menu {
@@ -334,6 +335,14 @@ header .icon {
     gap: 1rem;
     align-items: center;
 }
+.book .button.ver-mas {
+    margin: auto;
+    left: 0.625rem;
+    height: 50px;
+    width: 90px;
+}
+
+    
 
 .item-carrito-controls {
     display: flex;
@@ -379,7 +388,6 @@ header .icon {
 
 #carrito-sidebar.open {
     right: 0;
-    /* Cambia el valor de right para mostrar el carrito */
 }
 
 .coloresi {
@@ -879,7 +887,7 @@ a{ text-decoration: none; /* Elimina el subrayado */
 
 .featured{
     display: grid;
-    grid-template-columns:1fr 3fr 1FR ;
+    grid-template-columns: 20fr  ;
 
 }
 
@@ -968,55 +976,45 @@ color:black
 }
 
 
-button {
-    display: inline-block;
-    padding: 10px 20px; /* Ajusta el relleno para los botones */
-    font-size: 16px; /* Ajusta el tamaño de la fuente */
-    font-weight: bold; /* Ajusta el peso de la fuente */
-    color: white; /* Color de texto */
-    background-color:rgb(57, 57, 57) ;
-    border: none; /* Sin bordes */
-    border-radius: 5px; /* Borde redondeado */
-    text-align: center; /* Centra el texto en el botón */
-    text-decoration: none; /* Elimina subrayado para enlaces */
-    cursor: pointer; /* Cambia el cursor al apuntador de mouse */
-    transition: background-color 0.3s ease; /* Transición suave en el color de fondo */
-}
-button:hover {
-    background-color:rgb(26, 215, 215); 
-    
-    color:rgb(57, 57, 57) ;
-}
-
 .grid-container1 {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
 }
 
-.book1 {
-    background-color: rgb(18, 18, 20);
-    border: 1px solid #8d8d8d;
-    border-radius: 2%;
-    padding: 10px;
-    text-align: center;
-    height:400px ;
-}
-.book1:hover {
-    background-color: #cdcaca; 
-    border: 1px solid #8d8d8d;
-    border-radius: 2%;
-    padding: 10px;
-    text-align: center;
-    color: black;
+
+
+
+#alerta {
+    position: sticky;
+    top: 7rem;
+    z-index: 1000; /* Asegúrate de que la alerta esté por encima de otros elementos */
+    display: none;
+    margin: 10px;
 }
 
 
-.book1 img {
+#sucursales-link.active {
+    background-color: var(--color-principal); 
+    color: var(--color-terciario);
+    
+}
+
+#iframe-container {
+    text-align: center;
+    display: none;
+    position: absolute; 
+    top: 5rem; 
+    left: 15.1rem; 
+    background-color: var(--color-secundario);
+    color: var(--color-terciario);
+    width: 25rem;
+    z-index: 1000;
+}
+
+#iframe-container iframe {
     width: 100%;
     height: 300px;
-}
-
-.book1 h3, .book1 p, .book1 button {
-    margin: 10px 0;
+    border: 0;
+    margin-bottom: 20px;
 }

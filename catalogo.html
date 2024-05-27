@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Catálogo de Libros</title>
+    <title>Tienda de Libros</title>
+
     <link rel="stylesheet" href="./css/style.css">  
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="icon" type="image/x-icon" href="./Imagenes/icons8-ibooks-16.png">
 </head>
+
+
 <body>
     <header class="header" id="header">
         <button id="abrir" class="abrir-menu"><i class="fas fa-bars"></i></button>
@@ -20,10 +27,10 @@
             <ul class="nav-list">
                 <li><a href="index.html">Inicio</a></li>
                 <li><a href="catalogo.html">Catálogo</a></li>
-                <li><a href="#">Contacto</a></li>
+                <li><a href="#" id="sucursales-link">Sucursales</a></li>
             </ul>
         </nav>
-        <h1 class="titulo"><span></span>Cac<span>/></span></h1>
+        <h1 class="titulo"><span><</span>Cac<span>/></span></h1>
         <div class="nav-derecho">
             <a href="#"><i class="fas fa-user"></i></a>
             <a href="#carrito" id="carrito-nav" class="carrito-link">
@@ -32,6 +39,21 @@
             </a>
         </div>
     </header>
+    <div id="alerta" class="alert alert-success alert-dismissible" style="display: none;">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong>Exito!</strong> Item agregado correctamente.
+    </div>
+    <div class="iframe-container" id="iframe-container">
+        <div>
+            <p>Sucursal 1</p>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3283.8459968801585!2d-58.37285272405415!3d-34.60805557295273!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a3352cbe276f75%3A0xe16921ef0545f86d!2sCasa%20Rosada!5e0!3m2!1ses!2sar!4v1716767990979!5m2!1ses!2sar" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>           </div>
+        <div>
+            <p>Sucursal 1</p>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3283.7761734111573!2d-58.39597460472298!3d-34.60982097608824!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bccac2cd859503%3A0x75cdafaaef2b946!2sCongreso%20de%20la%20Naci%C3%B3n%20Argentina!5e0!3m2!1ses!2sar!4v1716768040943!5m2!1ses!2sar" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>        </div>
+        <div>
+            <p>Sucursal 1</p>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3284.0167135736465!2d-58.384145324054366!3d-34.603738872954246!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4aa9f0a6da5edb%3A0x11bead4e234e558b!2sObelisco!5e0!3m2!1ses!2sar!4v1716768125834!5m2!1ses!2sar" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>        </div>
+    </div>
     <main class="main">
         <section>
             <div id="loader-container" class="loader-container">
@@ -82,6 +104,27 @@
         </form>
     </div>
 
+    
+
+
+
+
+
+
+
+
+
+
+
+    <div id="catalogo-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="document.getElementById('catalogo-modal').style.display='none'">&times;</span>
+            <img id="catalogo-imagen" src="" alt="Portada del libro">
+            <h2 id="catalogo-titulo"></h2>
+            <p id="catalogo-autor"></p>
+            <p id="catalogo-descripcion"></p>
+        </div>
+    </div>
     
     <script src="./js/script.js"></script>
 </body>

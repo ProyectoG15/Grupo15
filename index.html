@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Tienda de Libros</title>
 
@@ -26,7 +27,7 @@
             <ul class="nav-list">
                 <li><a href="index.html">Inicio</a></li>
                 <li><a href="catalogo.html">Catálogo</a></li>
-                <li><a href="#">Contacto</a></li>
+                <li><a href="#" id="sucursales-link">Sucursales</a></li>
             </ul>
         </nav>
         <h1 class="titulo"><span><</span>Cac<span>/></span></h1>
@@ -42,7 +43,17 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         <strong>Exito!</strong> Item agregado correctamente.
     </div>
-
+    <div class="iframe-container" id="iframe-container">
+        <div>
+            <p>Sucursal 1</p>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3283.8459968801585!2d-58.37285272405415!3d-34.60805557295273!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a3352cbe276f75%3A0xe16921ef0545f86d!2sCasa%20Rosada!5e0!3m2!1ses!2sar!4v1716767990979!5m2!1ses!2sar" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>           </div>
+        <div>
+            <p>Sucursal 1</p>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3283.7761734111573!2d-58.39597460472298!3d-34.60982097608824!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bccac2cd859503%3A0x75cdafaaef2b946!2sCongreso%20de%20la%20Naci%C3%B3n%20Argentina!5e0!3m2!1ses!2sar!4v1716768040943!5m2!1ses!2sar" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>        </div>
+        <div>
+            <p>Sucursal 1</p>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3284.0167135736465!2d-58.384145324054366!3d-34.603738872954246!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4aa9f0a6da5edb%3A0x11bead4e234e558b!2sObelisco!5e0!3m2!1ses!2sar!4v1716768125834!5m2!1ses!2sar" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>        </div>
+    </div>
     <main class="main">
         <section>
 
@@ -55,34 +66,12 @@
                     <section class="about LetraBlanca" style="margin: auto;">
                         
                     </section>
-                    <div class="grid-container1" style="color:aliceblue">
-                        <div class="book1">
-                            <img src="./Imagenes/DonQ.png" alt="Portada del libro">
-                            <h3>Don Quijote</h3>
-                            <p>Miguel De Cervantes</p>
-                        </div>
-                        <div class="book1">
-                            <img src="./Imagenes/Hamlet.png" alt="Portada del libro">
-                            <h3>Hamlet</h3>
-                            <p>William Shakespeare</p>
-                        </div>
-                        <div class="book1">
-                            <img src="./Imagenes/CuentosMacabros.png" alt="Portada del libro">
-                            <h4>CuentosMacabros</h4>
-                            <p>Edgar Allan Poe</p>
-                        </div>
-                        <div class="book1">
-                            <img src="./Imagenes/SinMiedo.png" alt="Portada del libro">
-                            <h3>Sin Miedo</h3>
-                            <p>R Santandreu</p>
-                        </div>
-                        <div class="book1">
-                            <img src="./Imagenes/TheWitcher.png" alt="Portada del libro">
-                            <h3>The Witcher</h3>
-                            <p>Jack Rembis</p>
-                        </div>
-        
-                    </div>
+<div id="libros-mas-vendidos" class="grid-container">
+    <!-- Carga dinámica de libros más vendidos -->
+</div>
+    
+                    
+
                 </section>
                 <div class="container" style="margin-top: 30px;">
                     <div></div>
