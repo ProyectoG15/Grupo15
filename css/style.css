@@ -142,9 +142,56 @@ body {
     padding: 0.3125rem 0.625rem; 
     font-size: 0.75rem;
 }
+#bookCarousel {
+    width: 80%; /* Ajustar el ancho del carrusel al 100% del contenedor */
+    margin: 0 auto; /* Centrar el carrusel horizontalmente */
+    display: flex;
+    justify-content: center; /* Centrar el contenido horizontalmente */
+}
+
+#bookCarousel .carousel-inner {
+    width: 600px;
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente las imágenes */
+    align-items: start;
+    overflow-x: scroll; /* Habilitar desplazamiento horizontal */
+    scroll-snap-type: x mandatory; /* Ajustar el desplazamiento táctil */
+    -webkit-overflow-scrolling: touch; /* Desplazamiento suave en dispositivos táctiles */
+}
+
+#bookCarousel .carousel-item {
+    scroll-snap-align: center; /* Ajustar el posicionamiento del scroll */
+    flex: none; /* Evitar que los elementos se redimensionen */
+}
+
+#bookCarousel .carousel-item img {
+    width: 450px; /* Ajusta el ancho máximo de las imágenes */
+    height: 650px; /* Mantén la proporción de aspecto */
+    margin: 0 5px; /* Espacio entre las imágenes */
+}
+
+/* Ocultar los controles de navegación */
+#bookCarousel .carousel-control-prev,
+#bookCarousel .carousel-control-next {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    #bookCarousel {
+        width: 70%; /* Ajustar el ancho del carrusel al 100% del contenedor */
+        margin: 0 auto; /* Centrar el carrusel horizontalmente */
+        display: flex;
+        justify-content: center; /* Centrar el contenido horizontalmente */
+    }
+    
+    #bookCarousel .carousel-item img {
+        width: 100%; /* Ajustar el ancho de las imágenes al 100% del contenedor */
+        height: auto; /* Mantener la proporción de aspecto */
+        margin: 0 2px; /* Espacio entre las imágenes */
+    }
+}
 
 @media screen and (max-width: 490px) {
-    /* Menu button is visible by default on small screens */
     .nav {
         top: 5rem; /* Ajusta la posición del menú */
     }
